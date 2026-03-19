@@ -1,0 +1,48 @@
+package org.app.controller;
+
+import io.quarkus.security.Authenticated;
+import org.app.entity.Service;
+import org.app.service.ServiceService;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+
+import java.util.List;
+
+@Path("/services")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+@Authenticated
+public class ServiceController {
+
+    @Inject
+    ServiceService serviceService;
+
+    @GET
+    public List<Service> getAll(){
+        return serviceService.getAll();
+    }
+
+    @GET
+    @Path("/worker/{workerId}")
+    public List<Service> getByWorker(@PathParam("workerId") Long workerId){
+        return serviceService.getByWorker(workerId);
+    }
+
+    @GET
+    @Path("/category/{categoryId}")
+    public List<Service> getByCategory(@PathParam("categoryId") Long categoryId){
+        return serviceService.getByCategory(categoryId);
+    }
+
+    @POST
+    @Path("/worker/{workerId}/category/{categoryId}")
+    public Service create(
+            @PathParam("workerId") Long workerId,
+            @PathParam("categoryId") Long categoryId,
+            Service service){
+
+        return serviceService.create(workerId, categoryId, service);
+    }
+}
