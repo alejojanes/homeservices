@@ -22,6 +22,27 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public User getUserByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
+    @Transactional
+    public User updateUser(User user){
+        User existingUser = userRepository.findByEmail(user.email);
+
+        if(existingUser == null){
+            throw new RuntimeException("User not exists");
+        }
+
+        existingUser.name = user.name;
+        existingUser.lastname = user.lastname;
+        existingUser.phone = user.phone;
+
+        userRepository.persist(existingUser);
+
+        return existingUser;
+    }
+
     @Transactional
     public User createUser(User user){
 

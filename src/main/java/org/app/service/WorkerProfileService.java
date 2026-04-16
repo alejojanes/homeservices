@@ -26,6 +26,11 @@ public class WorkerProfileService {
         return workerRepository.listAll();
     }
 
+    // ✅ Obtener todos los workers
+    public List<WorkerProfile> getAllByCategory(Long id){
+        return workerRepository.getAllByCategory(id);
+    }
+
     // ✅ Obtener por ID
     public WorkerProfile getById(Long id){
         WorkerProfile worker = workerRepository.findById(id);

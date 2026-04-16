@@ -4,6 +4,8 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "service")
 public class Service extends PanacheEntityBase {
@@ -11,6 +13,11 @@ public class Service extends PanacheEntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnoreProperties("user")
+    public User user;
 
     // 🔥 Relación con Worker
     @ManyToOne
@@ -28,5 +35,10 @@ public class Service extends PanacheEntityBase {
 
     public String description;
 
-    public Double price;
+    public BigDecimal price;
+
+    @OneToOne
+    @JoinColumn(name = "status", nullable = false)
+    @JsonIgnoreProperties("status")
+    public Status status;
 }

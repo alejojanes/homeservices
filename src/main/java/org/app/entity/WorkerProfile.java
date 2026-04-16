@@ -17,6 +17,11 @@ public class WorkerProfile extends PanacheEntityBase {
     @JsonIgnoreProperties("workerProfile")
     public User user;
 
+    @OneToOne
+    @JoinColumn(name = "category_id", nullable = false, unique = true)
+    @JsonIgnoreProperties("workerProfile")
+    public Category category;
+
     public String description;
 
     @Column(name = "experience_years")

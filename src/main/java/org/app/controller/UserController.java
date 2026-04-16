@@ -1,6 +1,5 @@
 package org.app.controller;
 
-import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
@@ -19,8 +18,19 @@ public class UserController {
     UserService userService;
 
     @GET
-    public List<org.app.entity.User> getAll(){
-        return User.listAll();
+    public List<User> getAll(){
+        return userService.getAllUsers();
+    }
+
+    @GET
+    @Path("/email/{email}")
+    public User getAll(@PathParam("email") String email){
+        return userService.getUserByEmail(email);
+    }
+
+    @PUT
+    public User updateUser(User user){
+        return userService.updateUser(user);
     }
 
     @POST

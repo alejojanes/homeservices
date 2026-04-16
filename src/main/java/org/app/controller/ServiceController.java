@@ -1,6 +1,8 @@
 package org.app.controller;
 
 import io.quarkus.security.Authenticated;
+import org.app.dto.ServiceRequest;
+import org.app.dto.ServiceUpdate;
 import org.app.entity.Service;
 import org.app.service.ServiceService;
 
@@ -38,11 +40,24 @@ public class ServiceController {
 
     @POST
     @Path("/worker/{workerId}/category/{categoryId}")
-    public Service create(
+    public Service createByWorkerIdAndCategoryId(
             @PathParam("workerId") Long workerId,
             @PathParam("categoryId") Long categoryId,
             Service service){
 
-        return serviceService.create(workerId, categoryId, service);
+        return serviceService.createByWorkerAndCategory(workerId, categoryId, service);
     }
+
+    @POST
+    public Service create(ServiceRequest serviceRequest){
+
+        return serviceService.create(serviceRequest);
+    }
+
+    @PUT
+    public Service update(ServiceUpdate serviceUpdate){
+
+        return serviceService.update(serviceUpdate);
+    }
+
 }

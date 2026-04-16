@@ -23,6 +23,13 @@ public class WorkerProfileController {
         return workerService.getAll();
     }
 
+    // ✅ Obtener todos los workers por categoria
+    @GET
+    @Path("/category/{id}")
+    public List<WorkerProfile> getAllByCategoryId(@PathParam("id") Long id){
+        return workerService.getAllByCategory(id);
+    }
+
     // ✅ Obtener por ID
     @GET
     @Path("/{id}")

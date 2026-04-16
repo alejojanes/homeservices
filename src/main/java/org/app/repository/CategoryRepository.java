@@ -6,4 +6,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class CategoryRepository implements PanacheRepository<Category> {
+
+    public Category findByName(String name){
+        return find("name LIKE ?1", "%" + name + "%").firstResult();
+    }
+
 }
