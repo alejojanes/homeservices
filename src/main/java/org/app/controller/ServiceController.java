@@ -1,6 +1,7 @@
 package org.app.controller;
 
 import io.quarkus.security.Authenticated;
+import jakarta.ws.rs.core.Response;
 import org.app.dto.ServiceRequest;
 import org.app.dto.ServiceUpdate;
 import org.app.entity.Service;
@@ -9,8 +10,10 @@ import org.app.service.ServiceService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import org.jboss.resteasy.reactive.multipart.FileUpload;
 
 import java.util.List;
+
 
 @Path("/services")
 @Produces(MediaType.APPLICATION_JSON)
@@ -49,9 +52,10 @@ public class ServiceController {
     }
 
     @POST
-    public Service create(ServiceRequest serviceRequest){
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Service createService(ServiceRequest request) {
 
-        return serviceService.create(serviceRequest);
+        return serviceService.create(request);
     }
 
     @PUT

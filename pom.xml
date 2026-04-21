@@ -81,6 +81,12 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-jwt-build</artifactId>
         </dependency>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>s3</artifactId>
+            <version>2.42.37</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

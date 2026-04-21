@@ -9,6 +9,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.app.util.StatusEnum;
+import org.jboss.resteasy.reactive.multipart.FileUpload;
 
 import java.util.List;
 
@@ -29,6 +30,9 @@ public class ServiceService {
 
     @Inject
     StatusRepository statusRepository;
+
+    @Inject
+    S3Service s3Service;
 
     public List<Service> getAll(){
         return serviceRepository.listAll();
@@ -86,6 +90,8 @@ public class ServiceService {
 
         serviceRepository.persist(service);
 
+        String uploadResult = upload(serviceRequest);
+
         return service;
 
     }
@@ -121,4 +127,13 @@ public class ServiceService {
         return existingService;
     }
 
+    public String upload(ServiceRequest request){
+
+        for (var file : request.images) {
+            String url = s3Service.uploadFile(file);
+            System.out.println("Archivo subido: " + url);
+        }
+
+        return "Archivos subidos correctamente";
+    }
 }
