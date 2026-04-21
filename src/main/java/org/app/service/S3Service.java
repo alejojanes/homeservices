@@ -19,13 +19,14 @@ public class S3Service {
     @ConfigProperty(name = "bucket.amazon.s3")
     private String bucketName;
 
-    public String uploadFile(FileUpload file) {
+    public String uploadFile(FileUpload file, Long id) {
         try {
-            String fileName = UUID.randomUUID() + "_" + file.fileName();
+            String fileName = file.fileName();
+            String key = "services/"+id+"/"+fileName;
 
             PutObjectRequest request = PutObjectRequest.builder()
                     .bucket(bucketName)
-                    .key(fileName)
+                    .key(key)
                     .contentType(file.contentType())
                     .build();
 
@@ -38,6 +39,7 @@ public class S3Service {
             return "https://" + bucketName + ".s3.amazonaws.com/" + fileName;
 
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException("Error subiendo archivo a S3", e);
         }
     }
