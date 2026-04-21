@@ -35,11 +35,9 @@ public class S3Service {
                     RequestBody.fromFile(file.uploadedFile())
             );
 
-            // URL pública (si el bucket lo permite)
             return "https://" + bucketName + ".s3.amazonaws.com/" + fileName;
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             throw new RuntimeException("Error subiendo archivo a S3", e);
         }
     }
