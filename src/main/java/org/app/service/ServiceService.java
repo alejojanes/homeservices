@@ -90,7 +90,7 @@ public class ServiceService {
 
         serviceRepository.persist(service);
 
-        String uploadResult = upload(serviceRequest);
+        String uploadResult = upload(serviceRequest, service.id);
 
         return service;
 
@@ -127,10 +127,10 @@ public class ServiceService {
         return existingService;
     }
 
-    public String upload(ServiceRequest request){
+    public String upload(ServiceRequest request, Long id){
 
         for (var file : request.images) {
-            String url = s3Service.uploadFile(file);
+            String url = s3Service.uploadFile(file, id);
             System.out.println("Archivo subido: " + url);
         }
 
